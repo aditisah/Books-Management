@@ -2,6 +2,7 @@
 
 const bookModel = require("../models/bookModel");
 const userModel = require("../models/userModel");
+const reviewModel = require("../models/reviewModel");
 const ObjectId = require("mongoose").Types.ObjectId;
 const isbn = require("isbn-validate"); // to validate 10 digit isbn
 const { checksum } = require("isbn-validation"); // to validate 13 digit isbn
@@ -183,9 +184,11 @@ const getBookById = async (req, res) => {
     return res.status(404).send({ status: false, message: "Book not found" });
   }
   // console.log(book)
+  let reviews = await reviewModel.find({bookId : bookId, isDeleted : false}).select({isDeleted: 0, createdAt: 0, updatedAt: 0, __v: 0})
   if (book.reviews === 0) {
     book._doc.reviewsData = [];
   }
+  book._doc.reviewsData = reviews
   return res.status(200).send({ status: true, message: "Success", data: book });
 };
 

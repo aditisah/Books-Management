@@ -31,9 +31,7 @@ const authorisation = async (req, res, next) => {
     let userId = req.body.userId;
     let bookId = req.params.bookId;
     let userIdFromBook;
-    if(!userId || userId === 'undefined'){
-      return res.status(400).send({status: false, message: 'Please enter userId'})
-    }
+    
     if (bookId) {
       if (!ObjectId.isValid(bookId)) {
         return res
@@ -49,6 +47,9 @@ const authorisation = async (req, res, next) => {
       }
       userIdFromBook = user.userId.toString();
     } else {
+      if(!userId || userId === 'undefined' || userId.trim().length === 0){
+        return res.status(400).send({status: false, message: 'Please enter userId'})
+      }
       userIdFromBook = userId;
     }
     if (decodedToken.userId !== userIdFromBook) {
