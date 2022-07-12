@@ -29,16 +29,23 @@ const userRegistration = async (req, res) => {
         if (!isValid(userData.email))
             return res.status(400).send({ status: false, msg: "email is required" });
         if (!isValid(userData.password))
-            return res
-                .status(400)
-                .send({ status: false, msg: "password is required" });
+        return res
+        .status(400)
+        .send({ status: false, msg: "password is required" });
         if (!isValid(userData.address))
+        return res
+        .status(400)
+        .send({ status: false, msg: "address is required" });
+        
+        ////<----------------------- title enum validation ------------------------------->
+        let enu = ["Mr", "Mrs", "Miss"];
+        if (!enu.includes(userData.title))
             return res
                 .status(400)
-                .send({ status: false, msg: "address is required" });
-
+                .send({ status: false, msg: `please provide one of them ${enu}` });
+                
         ///<------------------------ Email validation ---------------------------------------->
-
+        
         const validateEmail = function (mail) {
             if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
                 return true;
@@ -55,19 +62,21 @@ const userRegistration = async (req, res) => {
                 .send({ status: false, msg: "this Email is already exist ?" });
 
         ///<-----------------------------mobile number checking ---------------------------->
+
+        if (!(/^[6-9]\d{9}$/.test(userData.phone))){
+          return res
+          .status(400)
+          .send({ status: false, msg: "Please give phone number with (6-9)."  });
+
+        }
+
         let phoneNumChecking = await userModel.findOne({ phone: userData.phone });
         if (phoneNumChecking) {
             return res
                 .status(400)
-                .send({ status: false, msg: "this phone number is already exist ?" });
+                .send({ status: false, msg: "this phone number is already exist." });
         }
 
-        ////<----------------------- title enum validation ------------------------------->
-        let enu = ["Mr", "Mrs", "Miss"];
-        if (!enu.includes(userData.title))
-            return res
-                .status(400)
-                .send({ status: false, msg: `please provide one of them + ${enu}` });
         ////<----------------------- Password validation ------------------------------->
         const validatePassword = function (password) {
             if (/^[A-Za-z\W0-9]{8,15}$/.test(password)) {
@@ -77,7 +86,7 @@ const userRegistration = async (req, res) => {
         if (!validatePassword(userData.password))
             return res
                 .status(400)
-                .send({ status: false, msg: "this password format is incorrect" });
+                .send({ status: false, msg: " password should be 8-15 characters " });
 
         ////<----------------------- Address validation ------------------------------->
 
@@ -88,7 +97,7 @@ const userRegistration = async (req, res) => {
 
         }
 
-        if (!(/^[0-6]{6}$/.test(pincode))){
+        if (!(/^[0-9]{6}$/.test(pincode))){
           return res
           .status(400)
           .send({ status: false, msg: "Please use 6 Digit Numbers in Pincode."});
@@ -105,15 +114,14 @@ const userRegistration = async (req, res) => {
 
 //<------------------User Logging in------------------------------>//
 const userLogin = async (req, res) => {
-  const { email, password } = req.body;
-  if (Object.keys(req.body).length == 0)
-    res
-      .status(400)
-      .send({ status: false, message: "Enter Login Credentials." });
-  if (!email) 
-  return res.status(400).send({ status: false, msg: "Enter email." });
-  if (!password)
-    return res.status(400).send({ status: false, msg: "Enter password." });
+    const { email, password } = req.body;
+    if (Object.keys(req.body).length == 0)
+        res
+            .status(400)
+            .send({ status: false, message: "Enter Login Credentials." });
+    if (!email) res.status(400).send({ status: false, msg: "Enter email." });
+    if (!password)
+        res.status(400).send({ status: false, msg: "Enter password." });
 
     const validateEmail = function (mail) {
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
@@ -144,18 +152,18 @@ const userLogin = async (req, res) => {
             msg: "Email or the password is not correct",
         });
 
-  console.log(user);
-  let token = jwt.sign(
-    {
-      userId: user._id,
-      iat: Math.floor(Date.now() / 1000),
-     // exp: Math.floor(Date.now() / 1000) + 30 * 60,
-    },
-    "Room 1"
-  );
-  return res
-    .status(201)
-    .send({ status: true, msg: "You are loggedin Successfully", token: token });
+    let token = jwt.sign(
+        {
+            userId: user._id,
+            iat: Math.floor(Date.now() / 1000),
+            exp: Math.floor((Date.now() / 1000) + 180 * 60),
+        },
+        "Room 1"
+    );
+    
+    return res
+        .status(200)
+        .send({ status: true, msg: "login Successfully", token: token });
 };
 
 module.exports.userRegistration = userRegistration;

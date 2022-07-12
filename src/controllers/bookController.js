@@ -1,5 +1,3 @@
-/*############################################ POST BOOKS ##########################################################*/
-
 const bookModel = require("../models/bookModel");
 const userModel = require("../models/userModel");
 const reviewModel = require("../models/reviewModel");
@@ -353,3 +351,4 @@ module.exports.getBook = getBook;
 module.exports.getBookById = getBookById;
 module.exports.updateBook = updateBook;
 module.exports.deletedbook = deletedbook;
+
