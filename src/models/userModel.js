@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
     title: {
         type: String,
         enum: ["Mr", "Mrs", "Miss"],

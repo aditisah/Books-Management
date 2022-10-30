@@ -156,6 +156,7 @@ Refer below sample
 }
 ```
 ### Error Response structure
+
 ```yaml
 {
   status: false,
@@ -321,6 +322,6 @@ Refer below sample
 
 
 LINKS USED IN THIS PROJECT;-
-GITHUB LINK - https://github.com/pushpakov/Books-Management-Project.git
+GITHUB LINK - https://github.com/aditisah/Books-Management.git
 
-CLUSTER LINK - mongodb+srv://pushpak:pushpak1819@radoncluster.opqe2.mongodb.net/group1Database?retryWrites=true&w=majority
+CLUSTER LINK - mongodb+srv://aditisah:HdtoVDUgrpCUNRmS@cluster0.jjd4zhp.mongodb.net/BookManagement?retryWrites=true&w=majority

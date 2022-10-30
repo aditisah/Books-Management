@@ -5,26 +5,28 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/index.js"
+    "start": "nodemon src/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pushpakov/Books-Management-Project.git"
+    "url": "git+ https://github.com/aditisah/Books-Management.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/pushpakov/Books-Management-Project/issues"
+    "url": " https://github.com/aditisah/Books-Management/issues"
   },
-  "homepage": "https://github.com/pushpakov/Books-Management-Project#readme",
+  "homepage": " https://github.com/aditisah/Books-Management#readme",
   "dependencies": {
+    "aws-sdk": "^2.1174.0",
     "express": "^4.18.1",
     "isbn-validate": "^1.0.3",
     "isbn-validation": "^1.0.72",
     "isbn-verify": "^1.0.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.4.3",
+    "multer": "^1.4.5-lts.1",
     "nodemon": "^2.0.19",
     "route": "^0.2.5"
   }
